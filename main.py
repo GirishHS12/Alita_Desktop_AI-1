@@ -6,10 +6,11 @@ from engine.command import *
 
 web_folder = 'www'
 
-eel.init(web_folder)
+def start():
+    eel.init(web_folder)
 
 
-playAssistantSound()
+    playAssistantSound()
 
-os.system('start msedge.exe --app="http://localhost:8000/index.html"')
-eel.start('index.html',mode=None,host='localhost',block=True)
+    os.system('start msedge.exe --app="http://localhost:8000/index.html"')
+    eel.start('index.html',mode=None,host='localhost',block=True)
