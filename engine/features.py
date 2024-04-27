@@ -1,5 +1,3 @@
-import re
-
 from playsound import playsound
 import eel
 import os
@@ -8,6 +6,9 @@ from engine.config import ASSISTANT_NAME
 import pywhatkit as kit
 import time
 import pyautogui
+import pyaudio
+import pvporcupine
+import struct
 
 # playing assistant sound function
 @eel.expose
@@ -24,17 +25,46 @@ def play_youtube(query):
     #time.sleep(2)
     pyautogui.hotkey('f')
 
-def extract_yt_term(command):
-    #Define a regular expression pattern a capture the song name
-    pattern = command
-    #use re.search to find the match in the command
-    match=re.search(pattern,command,re.IGNORECASE)
-    #If a match is found, return the extracted song name; otherwise, return None
-    return match.group(1) if match else didntGetRes()
-
-def didntGetRes(command):
-    query=takecommand()
-    play_youtube(query)
+def hotword():
+    porcupine=None
+    paud=None
+    audio_stream=None
+    
+    try:
+        #pre Trained keywords
+        porcupine=pvporcupine.create(keywords=["alita"])
+        paud=pyaudio.PyAudio()
+        audio_stream=paud.open(rate=porcupine.sample_rate,channels=1,format=pyaudio.paInt16,input=True,frames_per_buffer=porcupine.frame_length)
+        
+        #loop for streaming
+        while True:
+            keyword=audio_stream.read(porcupine.frame_length)
+            keyword=struct.unpack_from("h"*porcupine.frame_length,keyword)
+            
+            #processing keyword comes mic
+            keyword_index=porcupine.process(keyword)
+            
+            #checking first keyword detected for not
+            if keyword_index>=0:
+                print("hotword detected")
+                
+                #pressing shortcut key win+j
+                import pyautogui as autogui
+                autogui.keyDown("win")
+                autogui.press("j")
+                time.sleep(2)
+                autogui.keyUp("win")
+                
+    except:
+        if porcupine is not None:
+            porcupine.delete()
+        if audio_stream is not None:
+            audio_stream.close()
+        if paud is not None:
+            paud.terminate()
+            
+    
+            
 
 def openCommand(query):
     query.lower()
