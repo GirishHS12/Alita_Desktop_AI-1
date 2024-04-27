@@ -1,4 +1,6 @@
 $(document).ready(function () {
+
+    eel.wish()
     
     $('.text').textillate({
         loop:true,
@@ -44,5 +46,17 @@ $(document).ready(function () {
         $("#SiriWave").attr("hidden", false);
         eel.allCommand()()
     });
+
+    function doc_keyUp(e){
+        //this would test for whichever key is 40 (down arrow) and the ctrl key at the same time
+
+        if(e.key === 'j' && e.metaKey){
+            eel.playAssistantSound()
+            $("#Oval").attr("hidden",true);
+            $("#SiriWave").attr("hidden",false);
+            eel.allCommand()()
+        }
+    }
+    document.addEventListener('keyup',doc_keyUp,false);
 
 });

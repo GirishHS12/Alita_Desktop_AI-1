@@ -19,7 +19,7 @@ def speak(audio):
 
     engine.say(audio)
     eel.DisplayMessage(audio)
-    print(audio)
+    #print(audio)
     engine.runAndWait()
     
 @eel.expose   
@@ -36,8 +36,8 @@ def takecommand():
         eel.DisplayMessage('\rRecognizing...')
         query = r.recognize_google(audio,language='en-in')
         eel.DisplayMessage(query)
-        time.sleep(2)
-        #speak(query)
+        #time.sleep(2)
+        speak(query)
         #eel.ShowHood()
 
     except Exception as e:
@@ -68,16 +68,23 @@ def wish():
 
 @eel.expose
 def allCommand():
-    query=takecommand()
+    
+    try:
+        query=takecommand()
+        print(query)
 
-    if "open youtube" in query.lower():
-        from engine.features import play_youtube
-        play_youtube(query)
+        if "open youtube" in query.lower():
+          from engine.features import play_youtube
+          play_youtube(query)
         
-    elif "open" in query.lower():
-        from engine.features import openCommand
-        openCommand(query)
+        elif "open" in query.lower():
+           from engine.features import openCommand
+           openCommand(query)
+        else:
+            print("not run")
+    except:  
         
-
+        print("Error")
+    
         
     eel.ShowHood()
