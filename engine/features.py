@@ -26,6 +26,7 @@ def play_youtube(query):
     pyautogui.hotkey('f')
 
 def hotword():
+    
     porcupine = None
     paud = None
     audio_stream = None

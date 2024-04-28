@@ -56,7 +56,7 @@ def wish():
     else:
         speak("Good Evening Master")
 
-    speak("Im Alita....Your Personal AI Assistant...Please tell me How can I help you")
+    speak("Im Alita...Your Personal AI Assistant...Please tell me How can I help you")
 
 #if __name__ == "__main__":
 
