@@ -19,6 +19,7 @@ def speak(audio):
 
     engine.say(audio)
     eel.DisplayMessage(audio)
+    eel.receiverText(audio)
     #print(audio)
     engine.runAndWait()
     
@@ -67,12 +68,18 @@ def wish():
  #speak(query)
 
 @eel.expose
-def allCommand():
+def allCommand(message=1):
     
+    if message == 1:
+       query=takecommand()
+       print(query)
+       eel.senderText(query)
+        
+    else:
+        query = message
+        eel.senderText(query)
     try:
-        query=takecommand()
-        print(query)
-
+        
         if "open youtube" in query.lower():
           from engine.features import play_youtube
           play_youtube(query)
