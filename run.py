@@ -13,7 +13,7 @@ def startJarvis():
 def listenHotword():
     #Code for process 2
     print("Process 2 is running...")
-    #time.sleep(5)
+    time.sleep(5)
     from engine.features import hotword
     hotword()
     

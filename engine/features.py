@@ -3,7 +3,7 @@ import eel
 import os
 from engine.command import speak, takecommand
 from engine.config import ASSISTANT_NAME
-import pywhatkit as kit
+import pywhatkit
 import time
 import pyautogui
 import pyaudio
@@ -29,11 +29,7 @@ def playAssistantSound():
     playsound(music_dir)
 
 def play_youtube(query):
-    speak("What would you like to play ?")
-    song_query = takecommand()
-    #search_term=extract_yt_term(song_query)
-    speak(f"Playing {song_query} on YouTube")
-    kit.playonyt(song_query)
+    pywhatkit.playonyt(query)
     #time.sleep(2)
     #pyautogui.hotkey('f')
 
@@ -607,7 +603,7 @@ switcher = {
 
 
 def conversation_handler(query):
-    if "hi" in query or "hello" in query:
+    if "hi" in query or "hello" in query or "hi alita" in query or "hello alita" in query:
         speak("Hello Master, how can I assist you today?")
     elif "weather" in query:
         # You can integrate a weather API here to get real-time weather information
@@ -616,25 +612,26 @@ def conversation_handler(query):
         speak("I would like to talk to you! How's your day going?")
         query = takecommand()
         speak("you know what always make you feel better, on good or bad days? Its music, do you like music")
-        query = takecommand()
-        if "yes" in query:
+        query1 = takecommand()
+        if "yes" in query1:
             speak("wow thats great, what type of music do you like")
             speak(" do you like to watch movies")
-            query = takecommand()
-            if "yes" in query:
+            query2 = takecommand()
+            if "yes" in query2:
                 speak("wow thats great, what type of movies do you like")
                 time.sleep(3)
                 speak("what's your favorite movie")
                 time.sleep(3)
                 speak("do you like travelling")
-                query = takecommand()
-                if "yes" in query:
+                query3 = takecommand()
+                if "yes" in query3:
                     speak("its cool that you are into travel, what is you favorite destination")
-                    query = takecommand()
-                    speak("amazing! " + query + " would be a wonderful place to visit")
+                    query4 = takecommand()
+                    speak("amazing! " + query4 + " would be a wonderful place to visit")
                     speak("what are your hobbies")
+                    query5 = takecommand()
                     time.sleep(6)
-                    speak("thats amazing")
+                    speak("thats amazing" +query5+ "is great things to practice")
                     speak("what is your favorite food")
                     time.sleep(6)
                     speak("oh nice, do you eat often by the way")

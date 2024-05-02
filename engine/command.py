@@ -30,7 +30,7 @@ def takecommand():
     with sr.Microphone() as source:
         print("\rListening...")
         eel.DisplayMessage('\rListening...')
-        r.pause_threshold = 1
+        r.pause_threshold = 0.5
         audio = r.listen(source,10,6)
 
     try:
@@ -39,13 +39,15 @@ def takecommand():
         query = r.recognize_google(audio,language='en-in')
         eel.DisplayMessage(query)
         #time.sleep(2)
-        speak(query)
+        #speak(query)
         #eel.ShowHood()
 
     except Exception as e:
         speak("Say that again please...")
         print("Say that again please...")
         takecommand()
+        return
+
     return query.lower()
 
 @eel.expose
@@ -91,7 +93,7 @@ def allCommand(message=1):
             func()
         else:
             from engine.features import conversation_handler
-            print(query)
+            #print(query)
             conversation_handler(query)
 
     except:  
