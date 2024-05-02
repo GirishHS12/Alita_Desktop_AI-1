@@ -25,6 +25,7 @@ def speak(audio):
     
 @eel.expose   
 def takecommand():
+    global query
     r=sr.Recognizer()
     with sr.Microphone() as source:
         print("\rListening...")
@@ -43,8 +44,9 @@ def takecommand():
 
     except Exception as e:
         speak("Say that again please...")
-        return "none"
-    return query
+        print("Say that again please...")
+        takecommand()
+    return query.lower()
 
 @eel.expose
 def wish():
@@ -77,18 +79,21 @@ def allCommand(message=1):
         
     else:
         query = message
+        print(query)
         eel.senderText(query)
+        query=query.lower()
+
+    #print(query)
     try:
-        
-        if "open youtube" in query.lower():
-          from engine.features import play_youtube
-          play_youtube(query)
-        
-        elif "open" in query.lower():
-           from engine.features import openCommand
-           openCommand(query)
+        from engine.features import switcher
+        if query in switcher:
+            func = switcher.get(query, lambda: speak("Invalid command"))
+            func()
         else:
-            print("not run")
+            from engine.features import conversation_handler
+            print(query)
+            conversation_handler(query)
+
     except:  
         
         print("Error")
